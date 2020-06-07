@@ -1,0 +1,16 @@
+{
+  "name": "hiroshishishun/question3",
+  "authors": [
+    {
+      "name": "Allen Hung",
+      "email": "n0975763692@gmail.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Shop\\": "shops/",
+      "App\\": "../Question3"
+    }
+  }
+}
