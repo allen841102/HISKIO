@@ -58,19 +58,23 @@ $cart->load();
         <tr>
             <td><?php echo $item->getName(); ?></td>
             <td width="10px">&nbsp;</td>
-            <td>
-                <form action="?update=" method="post">
-                    <input type="text" name="newqty" value="<?php echo $item->getQty() ?>">
+            <form action="update.php" method="post">
+                <td>
+                    <input type="hidden" name="product" value="<?php echo $item->getName() ?>">
+                    <input type="text" name="qty" value="<?php echo $item->getQty() ?>">
                     <button type="submit" name="update" value="update">更新數量</button>
-                </form>
-            </td>
-
+                </td>
+            </form>
             <td width="10px"><?php echo $item->getTotal(); ?></td>
             <td></td>
             <td width="10px">&nbsp;</td>
-            <td>
-                <button type="submit" name="delete" value="delete">移除</button>
-            </td>
+
+            <form action="delete.php" method="post">
+                <td>
+                    <input type="hidden" name="product" value="<?php echo $item->getName() ?>">
+                    <button type="submit" name="delete" value="delete">移除</button>
+                </td>
+            </form>
         </tr>
     <?php } ?>
     <tr>

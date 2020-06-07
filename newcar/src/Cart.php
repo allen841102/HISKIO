@@ -61,5 +61,17 @@ class Cart
         return true;
     }
 
+    public function delete($name)
+    {
+        /** @var CarItem $item */
+        foreach ($this->items as $key => $item) {
+            if ($item->getName() == $name) {
+                unset($this->items[$key]);
+            }
+        }
+        $this->sessionManager->set('cart', $this->items);
+        return true;
+    }
+
 
 }
