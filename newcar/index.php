@@ -61,7 +61,7 @@ $cart->load();
             <form action="update.php" method="post">
                 <td>
                     <input type="hidden" name="product" value="<?php echo $item->getName() ?>">
-                    <input type="text" name="qty" value="<?php echo $item->getQty() ?>">
+                    <input type="number" min="1" name="qty" value="<?php echo $item->getQty() ?>">
                     <button type="submit" name="update" value="update">更新數量</button>
                 </td>
             </form>
