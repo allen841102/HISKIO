@@ -1,9 +1,11 @@
-<?php session_start();
+<?php use Cart\ProductManager;
 
+session_start();
+require __DIR__ . '/vendor/autoload.php';
 //---------------------------
-//Define the products and price
-$products = array("product A", "product B", "product C");
-$amounts = array("10", "20", "30");
+$productManager = new ProductManager();
+$cart = new \Cart\Cart();
+$cart->load();
 ?>
 <h2>商品列表</h2>
 <table>
@@ -15,12 +17,12 @@ $amounts = array("10", "20", "30");
         <th></th>
     </tr>
     <?php
-    for ($i = 0; $i < count($products); $i++) {
+    foreach ($productManager->getProducts() as $product) {
         ?>
         <tr>
-            <td><?php echo($products[$i]); ?></td>
+            <td><?php echo($product->name); ?></td>
             <td width="10px">&nbsp;</td>
-            <td><?php echo($amounts[$i]); ?></td>
+            <td><?php echo($product->price); ?></td>
             <td width="10px">&nbsp;</td>
             <td>
                 <button type="submit" name="insert" value="insert">新增</button>
@@ -43,26 +45,31 @@ $amounts = array("10", "20", "30");
         <th width="10px">&nbsp;</th>
         <th></th>
     </tr>
-    <tr>
-        <td>test</td>
-        <td width="10px">&nbsp;</td>
-        <td>
-            <form action="?update=" method="post">
-                <input type="text" name="newqty" value="">
-                <button type="submit" name="update" value="update">更新數量</button>
-            </form>
-        </td>
+    <?php
+    /** @var \Cart\CarItem $item */
+    foreach ($cart->items as $item) {
 
-        <td width="10px">&nbsp;</td>
-        <td></td>
-        <td width="10px">&nbsp;</td>
-        <td>
-            <button type="submit" name="delete" value="delete">移除</button>
-        </td>
-    </tr>
+        ?>
+        <tr>
+            <td><?php echo $item->getName(); ?></td>
+            <td width="10px">&nbsp;</td>
+            <td>
+                <form action="?update=" method="post">
+                    <input type="text" name="newqty" value="<?php echo $item->getQty() ?>">
+                    <button type="submit" name="update" value="update">更新數量</button>
+                </form>
+            </td>
 
+            <td width="10px"><?php echo $item->getTotal(); ?></td>
+            <td></td>
+            <td width="10px">&nbsp;</td>
+            <td>
+                <button type="submit" name="delete" value="delete">移除</button>
+            </td>
+        </tr>
+    <?php } ?>
     <tr>
-        <td colspan="7">總價 :</td>
+        <td colspan="7">總價 :<?php echo $cart->getTotalAmount(); ?></td>
     </tr>
 </table>
 
