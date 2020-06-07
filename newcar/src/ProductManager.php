@@ -24,4 +24,14 @@ class ProductManager
     {
         return $this->products;
     }
+
+    public function findPrice($name)
+    {
+        foreach ($this->products as $product) {
+            if ($product->name == $name) {
+                return $product->price;
+            }
+        }
+        return 0;
+    }
 }

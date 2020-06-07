@@ -1,10 +1,12 @@
-<?php use Cart\ProductManager;
+<?php use Cart\Cart;
+use Cart\ProductManager;
+use Cart\SessionManager;
 
-session_start();
 require __DIR__ . '/vendor/autoload.php';
+$sessionManager = new SessionManager();
 //---------------------------
 $productManager = new ProductManager();
-$cart = new \Cart\Cart();
+$cart = new Cart($productManager, $sessionManager);
 $cart->load();
 ?>
 <h2>商品列表</h2>
@@ -20,12 +22,15 @@ $cart->load();
     foreach ($productManager->getProducts() as $product) {
         ?>
         <tr>
-            <td><?php echo($product->name); ?></td>
-            <td width="10px">&nbsp;</td>
-            <td><?php echo($product->price); ?></td>
-            <td width="10px">&nbsp;</td>
-            <td>
-                <button type="submit" name="insert" value="insert">新增</button>
+            <form action="insert.php" method="post">
+                <td><?php echo($product->name); ?></td>
+                <td width="10px">&nbsp;</td>
+                <td><?php echo($product->price); ?></td>
+                <td width="10px">&nbsp;</td>
+                <td>
+                    <input type="hidden" name="product" value="<?php echo($product->name); ?>">
+                    <button type="submit" name="insert" value="insert">新增</button>
+            </form>
             </td>
         </tr>
         <?php
