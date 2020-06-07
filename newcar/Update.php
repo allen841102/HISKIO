@@ -11,6 +11,6 @@ $sessionManager = new SessionManager();
 
 $cart = new Cart($productManager, $sessionManager);
 $cart->load();
-$cart->update($_POST['product']);
+$cart->update($_POST['product'], $_POST['qty']);
 header('Location: index.php');
 exit();

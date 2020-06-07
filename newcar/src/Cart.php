@@ -73,5 +73,20 @@ class Cart
         return true;
     }
 
+    public function update($name, $qty)
+    {
+        foreach ($this->items as $key => $item) {
+            if ($item->getName() == $name) {
+                if ($qty > 0) {
+                    $item->setQty($qty);
+                } else {
+                    unset($this->items[$key]);
+                }
+            }
+        }
+        $this->sessionManager->set('cart', $this->items);
+        return true;
+    }
+
 
 }
